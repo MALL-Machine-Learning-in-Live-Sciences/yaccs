@@ -1,0 +1,17 @@
+name: r_env
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - r-base          # R base package
+  - r-tcgabiolinks  # R package for accessing TCGA data
+  - r-summarizedexperiment  # Container for genomic experiment data
+  - r-readxl        # For reading Excel files
+  - r-dplyr         # Data manipulation package
+  - r-fastdummies   # Creating dummy variables
+  - r-biomart       # Interface to BioMart databases
+  - r-geoquery      # Access to Gene Expression Omnibus (GEO) data
+  - r-deseq2        # Differential expression analysis
+  - r-fcbf          # Fast Correlation Based Filter (for feature selection)
+  - r-annotationdbi # Interface for genomic data annotations
+  - r-org.hs.eg.db  # Human genome-wide annotation package

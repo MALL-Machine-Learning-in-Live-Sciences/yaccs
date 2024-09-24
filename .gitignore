@@ -1,0 +1,9 @@
+# files
+*.Rhistory
+*.Rproj.user/
+
+# folders
+00_pp/
+tmp/
+data/
+extdata/
