@@ -1,4 +1,3 @@
-source("R/utils.R")
 source("requirements.R")
 
 # Inputpaths
@@ -11,6 +10,10 @@ outputdir <- "data/data_partitions/"
 # Load data
 metadata <- readRDS(metadata_inputpath)
 counts <- readRDS(counts_inputpath)
+
+# Make names
+names(metadata) <- make.names(names(metadata))
+names(counts) <- make.names(names(counts))
 
 # Define partitions
 smpSize <- floor(0.9 * nrow(metadata))
