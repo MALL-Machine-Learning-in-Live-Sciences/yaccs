@@ -3,6 +3,7 @@ require(SummarizedExperiment)
 
 require(readxl)
 require(dplyr)
+require(data.table)
 require(fastDummies)
 
 require(biomaRt)
@@ -14,3 +15,9 @@ require(FCBF)
 
 require(AnnotationDbi)
 require(org.Hs.eg.db)
+
+require(survival)
+require(survminer)
+
+require(forestplot)
+

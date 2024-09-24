@@ -12,6 +12,10 @@ outputpath <- "data/yaccs/yaccs_annot.rds"
 # Arguments
 min_su <- 0.0025
 
+# Load data
+counts_train <- readRDS(counts_inputpath)
+metadata_train <- readRDS(metadata_inputpath)
+
 # Run FCBF
 data_fcbf <- fast.cor.FS(
     x = counts_train,
@@ -27,6 +31,9 @@ yaccs <- AnnotationDbi::select(
   keytype = "ENSEMBL",
   multiVals = "first"
 )
+
+yaccs <- yaccs[-which(yaccs$SYMBOL == "LGALS7B"), ]
+rownames(yaccs) <- 1:nrow(yaccs)
 
 # Store signature
 saveRDS(yaccs, file = file.path(outputpath))
