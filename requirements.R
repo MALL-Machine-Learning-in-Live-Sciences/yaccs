@@ -21,3 +21,9 @@ require(survminer)
 
 require(forestplot)
 require(ggplot2)
+require(viridis)
+
+require(qusage)
+require(BiocParallel)
+require(SigCheck)
+require(Biobase)

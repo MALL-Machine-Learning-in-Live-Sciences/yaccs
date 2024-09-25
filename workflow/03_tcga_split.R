@@ -13,7 +13,6 @@ counts <- readRDS(counts_inputpath)
 
 # Make names
 names(metadata) <- make.names(names(metadata))
-names(counts) <- make.names(names(counts))
 
 # Define partitions
 smpSize <- floor(0.9 * nrow(metadata))

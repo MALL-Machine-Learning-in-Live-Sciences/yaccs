@@ -64,6 +64,7 @@ pred_train_cvrts <- survival::survConcordance(Surv(SurvTime, vital_status) ~ pre
 pred_train_yaccs <- survival::survConcordance(Surv(SurvTime, vital_status) ~ predict(cox_yaccs, train[, c(surv_vars, yaccs$SYMBOL)]), train)
 
 cindex_train <- data.frame(
+    Study = c("yaccs + cvrts", "cvrts", "yaccs"),
     C = c(pred_train_all$concordance, pred_train_cvrts$concordance, pred_train_yaccs$concordance),
     ci_l = c(
         pred_train_all$concordance - 1.96 * pred_train_all$std.err,
@@ -88,6 +89,7 @@ pred_test_cvrts <- survival::survConcordance(Surv(SurvTime, vital_status) ~ pred
 pred_test_yaccs <- survival::survConcordance(Surv(SurvTime, vital_status) ~ predict(cox_yaccs, test[, c(surv_vars, yaccs$SYMBOL)]), test)
 
 cindex_test <- data.frame(
+    Study = c("yaccs + cvrts", "cvrts", "yaccs"),
     C = c(pred_test_all$concordance, pred_test_cvrts$concordance, pred_test_yaccs$concordance),
     ci_l = c(
         pred_test_all$concordance - 1.96 * pred_test_all$std.err,
