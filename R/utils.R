@@ -1,5 +1,27 @@
 # Fast Correlation Based Feature Selection
 # -----------------------------------------
+labelData = function(years, clinical){
+  
+  time = clinical$SurvTime
+  event = clinical$vital_status
+  
+  limit = 365 * years
+  
+  for (i in 1:length(time)) {
+    if (time[i] > limit) {
+      time[i] = limit
+      event[i] = 'Alive'
+    }
+  }
+  
+  clinical$SurvTime = time
+  clinical$vital_status = event
+  
+  return(clinical)
+}
+
+
+
 fast.cor.FS = function(x, y, min_su){
   
   require(FCBF)

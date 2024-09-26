@@ -27,3 +27,9 @@ require(qusage)
 require(BiocParallel)
 require(SigCheck)
 require(Biobase)
+
+require(GSVA)
+require(corrplot)
+
+require(jetset)
+require(GEOquery)
