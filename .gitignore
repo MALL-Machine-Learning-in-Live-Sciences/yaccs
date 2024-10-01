@@ -1,6 +1,7 @@
 # files
 *.Rhistory
 *.Rproj.user/
+TODO.md
 
 # folders
 00_pp/

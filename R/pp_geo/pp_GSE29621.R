@@ -1,4 +1,5 @@
 source("requirements.R")
+source("R/MSIpred.R")
 
 # Inputpaths
 inputpath <- "extdata/geo/GSE29621.rds"
@@ -34,7 +35,7 @@ clinical <-
     pData(data) %>%
     mutate(
         vital_status = case_when(
-            `os event:ch1` == "death" ~ "Dead",
+            `os event:ch1` == "dead" ~ "Dead",
             `os event:ch1` == "alive" ~ "Alive"
         ),
         SurvTime = as.vector(as.numeric(`overall survival (os):ch1`)) * 30,
