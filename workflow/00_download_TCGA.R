@@ -1,6 +1,6 @@
 source("requirements.R")
 
-outdir <- "00_pp/data/"
+outdir <- "extdata/tcga-coad/"
 
 # Data download by barcode (RNASeq and clinical data)
 projID <- "TCGA-COAD"
@@ -14,8 +14,11 @@ query <- GDCquery(project = projID,
 
 GDCdownload(query, directory = outdir)
 expDat <- GDCprepare(query = query,
-                    save = TRUE,
+                    save = FALSE,
                     directory = outdir,
-                    save.filename = "00_preprocessing/data/TCGA-COAD-RNASeq")
+                    save.filename = "TCGA-COAD_counts")
 
-saveRDS(expDat, file = paste0(outdir, 'TCGA-COAD-RNASeq_SumExp.rds'))
+saveRDS(expDat, file = paste0(outdir, 'TCGA-COAD-RNASeq_counts.rds'))
+
+
+

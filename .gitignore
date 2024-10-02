@@ -2,6 +2,7 @@
 *.Rhistory
 *.Rproj.user/
 TODO.md
+MANIFEST.txt
 
 # folders
 00_pp/
