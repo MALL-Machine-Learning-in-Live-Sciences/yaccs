@@ -2,6 +2,12 @@
 # remotes::install_github("WangX-Lab/PreMSIm")
 # see (https://github.com/WangX-Lab/PreMSIm/)
 
+# Run example
+# Data preprocessing (select matched genes and 0-1 scale gene expression values) --------------
+library(PreMSIm)
+path = system.file("extdata", "example.txt", package = "PreMSIm", mustWork = TRUE)
+data_pre(path, type = "ID")
+
 predMSI <- function(counts){
   
   require(PreMSIm)
@@ -12,12 +18,26 @@ predMSI <- function(counts){
   msiSig[grep('RTF2', msiSig)] <- 'SLC52A3'
   msiSig[grep('NHLRC1', msiSig)] <- 'EPM2A'
 
+  # Convert to symbol
+  js_annot <- jscores(
+    chip = "hgu133plus2",
+    probeset = rownames(counts) 
+  ) %>%
+  tibble::rownames_to_column("probeID") %>%
+  filter(
+    symbol %in% msiSig
+  ) %>%
+  group_by(symbol) %>%
+  slice_max(order_by = overall, with_ties = FALSE) %>%
+  dplyr::select(c(probeID, symbol))
+
   # Subset counts by signature
   counts_ <-
     counts %>%
     as.data.frame() %>%
-    tibble::rownames_to_column("symbol") %>%
-    filter(symbol %in% msiSig) %>%
+    tibble::rownames_to_column("probeID") %>%
+    inner_join(js_annot, counts, by = "probeID") %>%
+    dplyr::select(-c(probeID)) %>%
     tibble::column_to_rownames("symbol")
 
   # Format gene names
@@ -32,7 +52,6 @@ predMSI <- function(counts){
   write.table(counts_, file =  tmppath, sep = "\t")
 
   # Calculate MSI
-  system.file("extdata", "example.txt", package = "PreMSIm", mustWork = TRUE)
   premsi <- PreMSIm::data_pre(tmppath, type = "Symbol")
   res <-
     PreMSIm::msi_pre(premsi) %>%

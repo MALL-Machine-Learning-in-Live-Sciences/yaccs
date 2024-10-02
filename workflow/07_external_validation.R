@@ -5,6 +5,7 @@ source("requirements.R")
 # Inputpaths
 external_cohorts_inputpath <- "data/pp/geo/"
 cox_models_inputpath <- "data/cox/tcga/signatures/"
+signatures_annot_inputpath <- "extdata/signatures/signatures_annot.rds"
 
 # Outputpath
 outputpath <- "data/cox/external/cindex_external_validations.rds"
@@ -38,16 +39,14 @@ cohorts <- c(
   "GSE39582"
   )
 
-# TO REMOVE
-signature <- "coloPrint"
-cohort <- "GSE29621"
-
-
 # Function to predict in external cohorts
 external_prediction <- function(signature, cohorts) {
 
   # Load train
   train <- readRDS(file.path(cox_models_inputpath, signature, "train_all.rds"))
+
+  # Load annotation of signatures
+  signatures_annot <- readRDS(signatures_annot_inputpath)
 
   # Define signature
   genes_signature <- setdiff(colnames(train), cvrt)
@@ -57,12 +56,24 @@ external_prediction <- function(signature, cohorts) {
   ext_cohorts_clin <- list()
   cox <- list()
 
-  cohort <- cohorts[1]
+  # cohort <- cohorts[1]
   for (cohort in cohorts) {
+
+    print(paste0("Running ", signature, " in ", cohort))
 
     test_clinical <- readRDS(paste0(external_cohorts_inputpath, cohort, "_clinical.rds"))
     names(test_clinical) <- make.names(names(test_clinical))
     test_counts <- readRDS(paste0(external_cohorts_inputpath, cohort, "_counts.rds")) %>% t()
+    
+    sig <- 
+      signatures_annot %>%
+      filter(
+        cohort_name == cohort,
+        signature_name == signature 
+      )
+
+    test_counts <- test_counts[, sig$affy_hg_u133_plus_2]
+    colnames(test_counts) = sig$symbol
     colnames(test_counts) <- make.names(colnames(test_counts))
 
     common_genes <- intersect(genes_signature, colnames(test_counts))
@@ -174,7 +185,6 @@ external_prediction <- function(signature, cohorts) {
 
   return(performances)
 }
-
 
 res <- lapply(signatures, function(x) external_prediction(x, cohorts))
 res <- data.table::rbindlist(res)

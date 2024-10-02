@@ -1,4 +1,5 @@
 source("requirements.R")
+source("R/MSIpred.R")
 
 # Inputpaths
 inputpath <- "extdata/geo/GSE17537.rds"
@@ -16,18 +17,19 @@ data <- readRDS(inputpath)
 annot <- readRDS(plat_annot_inputpath)
 
 # Format counts
-counts <-
-    exprs(data) %>%
-    as.data.frame() %>%
-    tibble::rownames_to_column("probeID") %>%
-    left_join(., annot[, c("probeID", "symbol", "overall")], by = "probeID") %>%
-    group_by(symbol) %>%
-    slice_max(order_by = overall, with_ties = FALSE) %>%
-    filter(
-        !is.na(symbol)
-    ) %>%
-    tibble::column_to_rownames("symbol") %>%
-    dplyr::select(-c(probeID, overall))
+counts <- exprs(data) %>% as.data.frame()
+# counts <-
+#     exprs(data) %>%
+#     as.data.frame() %>%
+#     tibble::rownames_to_column("probeID") %>%
+#     left_join(., annot[, c("probeID", "symbol", "overall")], by = "probeID") %>%
+#     group_by(symbol) %>%
+#     slice_max(order_by = overall, with_ties = FALSE) %>%
+#     filter(
+#         !is.na(symbol)
+#     ) %>%
+#     tibble::column_to_rownames("symbol") %>%
+#     dplyr::select(-c(probeID, overall))
 
 # Format clinical
 clinical <-
