@@ -1,2 +1,3 @@
 ## TODO list
-* Preprocess external cohorts to select the same sonda than before! Some genes are not the same to make the predictions! Check that!
+* Check to remove patients with treatment in last cohort
+* Plot Forest plot (with and without cvrts) and MSI
