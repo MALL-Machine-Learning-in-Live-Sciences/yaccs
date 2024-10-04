@@ -35,3 +35,8 @@ require(jetset)
 require(GEOquery)
 
 require(sva)
+
+require(GSVA)
+require(mclust)
+require(HTSanalyzeR2)
+require(msigdbr)

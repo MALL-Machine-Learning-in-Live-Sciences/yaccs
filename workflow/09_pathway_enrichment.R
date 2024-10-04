@@ -1,5 +1,6 @@
 # Pathway enrichment
 # ----------
+source("requirements.R")
 
 # Inputpath
 tcga_inputpath <- "data/pp/counts_norm_coad_patients.rds"
@@ -7,9 +8,7 @@ signatures_inputpath <- "extdata/signatures/signatures_coad.rds"
 tcga_counts_inputpath <- "extdata/tcga-coad/TCGA-COAD-RNASeq_counts.rds"
 
 # Outputpath
-outputpath <- "data/pathway-enrichment/yaccs_pathway_enrichment.rds"
-
-# Arguments
+outputpath <- "data/pathway-enrichment/tcga-plage-reactome_high_plage.rds"
 
 # Load data
 signatures <- readRDS(signatures_inputpath)
@@ -27,7 +26,7 @@ act <- gsva(
     method = "plage",
     kcdf = "Gaussian"
 ) %>%
-t() %>% 
+t() %>%
 as.data.frame() %>%
 rename("yaccs" = "V1")
 
@@ -43,9 +42,6 @@ clust <- Mclust(
 
 act$classif <- clust$classification
 act$classif <- ifelse(act$classif == 2, "high", "low")
-
-# Save
-saveRDS(act, file = outputpath)
 
 # Differential expression analysis
 counts[1:5, 1:5]
@@ -117,10 +113,11 @@ gsca2 <- analyze(
 gsca3 <- appendGSTerms(gsca2, msigdbGSCs = c("Reactome"))
 
 # Save results
-saveRDS(
-    list(
-        Cluster = act,
-        DiffExpression = res,
-        PathwayEnrichment = gsca3
-        ),
-    file = outputpath)
+saveRDS(gsca3, file = outputpath)
+# saveRDS(
+#     list(
+#         Cluster = act,
+#         DiffExpression = res,
+#         PathwayEnrichment = gsca3
+#         ),
+#     file = outputpath)
