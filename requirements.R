@@ -40,3 +40,9 @@ require(GSVA)
 require(mclust)
 require(HTSanalyzeR2)
 require(msigdbr)
+
+require(ComplexHeatmap)
+require(ggpubr)
+
+require(reshape2)
+require(fgsea)
