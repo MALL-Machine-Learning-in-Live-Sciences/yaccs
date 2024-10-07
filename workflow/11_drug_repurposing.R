@@ -11,17 +11,17 @@ scores_inputpath <- "data/repurposing/signatures_scores.rds"
 outputpath <- "data/repurposing/fgsea_by_signature.rds"
 
 # Load data
-scores <- readRDS(scores_inputpath)
+scores <- readRDS(scores_inputpath) %>% as.data.frame()
 
-ccle_samlpe <- read.table(
-    ccle_inputpath,
-    header = TRUE,
-    sep = ",",
-    quote = '"',
-    fill = TRUE,
-    stringsAsFactors = FALSE,
-    row.names = NULL
-    )
+# ccle_samlpe <- read.table(
+#     ccle_inputpath,
+#     header = TRUE,
+#     sep = ",",
+#     quote = '"',
+#     fill = TRUE,
+#     stringsAsFactors = FALSE,
+#     row.names = NULL
+#     )
 
 prism2 <- read.table(
     prism_inputpath,
@@ -62,16 +62,11 @@ prism2_m <- t(prism2_m)
 # =================================
 signature <- unique(scores$signature)
 fgseaRes <- list()
-
+i <- 2
 for (i in seq_along(signature)) {
-  
-  print(paste0("Running ", signature[i]))
-  scores_f <- 
-    scores %>%
-    filter(
-      signature == signature[i]
-    )
 
+  print(paste0("Running ", signature[i]))
+  scores_f <- scores[which(scores$signature == signature[i]), ]
   signature_score <- scores_f$score
   names(signature_score) <- scores_f$cell_lines
 
