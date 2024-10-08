@@ -34,6 +34,9 @@ counts <- exprs(data) %>% as.data.frame()
 # Format clinical
 clinical <-
     pData(data) %>%
+    filter(
+        `chemotherapy.adjuvant:ch1` == "Y"
+    ) %>%
     mutate(
         vital_status = case_when(
             `os.event:ch1` == "1" ~ "Dead",
