@@ -9,3 +9,8 @@ MANIFEST.txt
 tmp/
 data/
 extdata/
+
+# workflow files
+workflow/00_download_TCGA.R
+workflow/01_pp_clinical.R
+workflow/02_pp_counts.R
