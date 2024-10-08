@@ -1,8 +1,8 @@
 source("requirements.R")
 
 # Inputpaths
-metadata_inputpath <- "data/pp/metadata_coad_patients.rds"
-counts_inputpath <- "data/pp/counts_norm_coad_patients.rds"
+metadata_inputpath <- "extdata/tcga-coad/metadata_coad_patients.rds"
+counts_inputpath <- "extdata/tcga-coad/counts_norm_coad_patients.rds"
 
 # Outputpaths
 outputdir <- "data/data_partitions/"
