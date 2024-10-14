@@ -3,6 +3,7 @@
 *.Rproj.user/
 TODO.md
 MANIFEST.txt
+extdata-yaccs.zip
 
 # folders
 00_pp/
